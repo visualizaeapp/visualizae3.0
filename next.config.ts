@@ -10,12 +10,7 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   serverExternalPackages: ['canvas'],
-  experimental: {
-    // Adicionado para permitir solicitações do ambiente de desenvolvimento do Studio
-    allowedDevOrigins: [
-      'https://6000-firebase-studio-1761768992712.cluster-gizzoza7hzhfyxzo5d76y3flkw.cloudworkstations.dev'
-    ],
-  },
+
   images: {
     remotePatterns: [
       {
