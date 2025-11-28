@@ -1,6 +1,6 @@
 import { firebaseConfig } from '@/firebase/config';
 import { initializeApp, getApps, getApp, type FirebaseApp } from 'firebase/app';
-import { type Auth, getAuth, setPersistence, inMemoryPersistence } from 'firebase/auth';
+import { type Auth, getAuth, setPersistence, browserLocalPersistence } from 'firebase/auth';
 import { type Firestore, getFirestore } from 'firebase/firestore';
 
 // Polyfill localStorage for SSR environments
@@ -33,8 +33,8 @@ export function initializeFirebaseServices() {
     auth = getAuth(app);
     firestore = getFirestore(app);
 
-    // Set in-memory persistence to avoid localStorage issues
-    setPersistence(auth, inMemoryPersistence).catch((error) => {
+    // Set browser local persistence to persist user session
+    setPersistence(auth, browserLocalPersistence).catch((error) => {
       console.error('Failed to set Firebase Auth persistence:', error);
     });
   } else {
