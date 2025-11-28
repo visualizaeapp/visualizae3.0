@@ -26,6 +26,8 @@ import FullscreenButton from '@/components/layout/fullscreen-button';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useUser } from '@/firebase';
+import { useFirestore } from '@/firebase/provider';
+import { doc, onSnapshot } from 'firebase/firestore';
 import { syncStripeSubscription } from '@/app/actions/stripe-actions';
 import { useToast } from '@/hooks/use-toast';
 import ScreenRecorder from '@/components/editor/screen-recorder';
@@ -112,7 +114,9 @@ export default function EditorPageClient({ projectId }: { projectId: string }) {
     isRecording,
     isProMode,
     setIsProMode,
+    setLayers,
   } = useEditor();
+  const firestore = useFirestore();
   const [theme, setTheme] = useState<Theme>('light');
   const canvasContainerRef = useRef<HTMLDivElement>(null);
   const rightPanelRef = useRef<HTMLDivElement>(null);
@@ -153,6 +157,29 @@ export default function EditorPageClient({ projectId }: { projectId: string }) {
       setIsSyncing(false);
     }
   }, [searchParams, user, isUserLoading, router, projectId, toast, isSyncing]);
+
+  // Load project data
+  useEffect(() => {
+    if (!projectId || !firestore || !user) return;
+
+    const unsubscribe = onSnapshot(doc(firestore, 'projects', projectId), (docSnapshot) => {
+      if (docSnapshot.exists()) {
+        const data = docSnapshot.data();
+        if (data.layers) {
+          setLayers(data.layers);
+        }
+      }
+    }, (error) => {
+      console.error("Error loading project:", error);
+      toast({
+        variant: 'destructive',
+        title: 'Erro ao carregar projeto',
+        description: 'Não foi possível carregar os dados do projeto.'
+      });
+    });
+
+    return () => unsubscribe();
+  }, [projectId, firestore, user, setLayers, toast]);
 
 
 
