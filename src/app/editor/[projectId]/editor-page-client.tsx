@@ -244,7 +244,7 @@ export default function EditorPageClient({ projectId }: { projectId: string }) {
           <Link href="/" className="flex items-center gap-3 mr-auto">
             <AppLogo className="h-6 w-auto" />
             <h1 className="text-xl font-semibold font-headline tracking-wide text-primary">
-              Visualizae 3.1
+              Visualizae 3.0
             </h1>
           </Link>
           <div className="flex-1 flex items-center min-w-0">

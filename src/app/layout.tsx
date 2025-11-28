@@ -5,7 +5,7 @@ import { AuthActionsProvider } from '@/providers/auth-provider';
 import ClientProviders from '@/providers/client-providers';
 
 export const metadata: Metadata = {
-  title: 'Visualizae',
+  title: 'Visualizae 3.0',
   description: 'An AI-powered canvas editor for stunning visuals.',
 };
 
