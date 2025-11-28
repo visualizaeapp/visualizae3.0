@@ -273,6 +273,9 @@ export default function EditorPageClient({ projectId }: { projectId: string }) {
             <h1 className="text-xl font-semibold font-headline tracking-wide text-primary">
               Visualizae 3.0
             </h1>
+            <span className="text-[10px] text-muted-foreground ml-2 mt-1">
+              Rev: 28/11/2025 13:23
+            </span>
           </Link>
           <div className="flex-1 flex items-center min-w-0">
             <ClientOnly>
